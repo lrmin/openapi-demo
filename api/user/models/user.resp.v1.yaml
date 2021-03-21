@@ -1,0 +1,21 @@
+title: user.resp
+type: object
+x-tags:
+  - user
+properties:
+  id:
+    type: integer
+  name:
+    type: string
+    description: 名字
+  age:
+    type: integer
+    description: 年龄
+    minimun: 1
+    maximum: 200
+  sex:
+    type: string
+    description: 性别
+    enum:
+      - male
+      - female

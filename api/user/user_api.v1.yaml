@@ -1,0 +1,198 @@
+openapi: 3.0.0
+info:
+  title: user_api
+  version: '1.0'
+  description: User Operation
+  contact:
+    name: lrmin
+    email: lrm1015@126.com
+servers:
+  - url: 'http://localhost:4010'
+    description: mock
+  - url: 'http://localhost:8080/user-cache'
+    description: local
+tags:
+  - name: user
+paths:
+  '/add':
+    post:
+      tags:
+        - user
+      summary: 新增用户
+      description: 新增用户
+      operationId: addUser
+      requestBody:
+        description: 用户信息
+        content:
+          application/json:
+            schema:
+              $ref: ./models/user.req.v1.yaml
+            examples:
+              Request_Example:
+                $ref: '#/components/examples/Request_Example1'
+        required: true
+      responses:
+        '200':
+          description: 成功响应，具体业务状态看状态码
+          content:
+            application/json:
+              schema:
+                $ref: ./models/response_user_success.v1.yaml
+              examples:
+                Response_Example:
+                  $ref: '#/components/examples/Response_Example1'
+  '/{id}':
+    get:
+      tags:
+        - user
+      summary: 查询单个用户
+      description: 查询单个用户
+      operationId: getUser
+      parameters:
+        - name: id
+          in: path
+          description: 用户id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 成功响应，具体业务状态看状态码
+          content:
+            application/json:
+              schema:
+                $ref: ./models/response_user_success.v1.yaml
+              examples:
+                Response_Example:
+                  $ref: '#/components/examples/Response_Example1'
+  /users/list:
+    get:
+      tags:
+        - user
+      summary: 查询多个用户
+      description: 查询多个用户
+      operationId: listUser
+      parameters:
+        - name: pageNo
+          in: query
+          description: 页码
+          schema:
+            type: integer
+            minimum: 1
+          required: true
+        - name: pageSize
+          in: query
+          description: 页大小
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+      responses:
+        '200':
+          description: 成功响应，具体业务状态看状态码
+          content:
+            application/json:
+              schema:
+                $ref: ./models/response_users_success.v1.yaml
+              examples:
+                Response_Example:
+                  $ref: '#/components/examples/Response_Example2'
+  '/update/{id}':
+    post:
+      tags:
+        - user
+      summary: 修改用户
+      description: 修改用户
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          description: 用户id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: 用户信息
+        content:
+          application/json:
+            schema:
+              $ref: ./models/user.req.v1.yaml
+            examples:
+              Request_Example:
+                $ref: '#/components/examples/Request_Example1'
+        required: true
+      responses:
+        '200':
+          description: 成功响应，具体业务状态看状态码
+          content:
+            application/json:
+              schema:
+                $ref: ./models/response_user_success.v1.yaml
+              examples:
+                Response_Example:
+                  $ref: '#/components/examples/Response_Example3'
+  '/delete/{id}':
+    post:
+      tags:
+        - user
+      summary: 删除用户
+      description: 删除用户
+      operationId: daleteUser
+      parameters:
+        - name: id
+          in: path
+          description: 用户id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: 成功响应，具体业务状态看状态码
+          content:
+            application/json:
+              schema:
+                $ref: ./models/response_user_success.v1.yaml
+              examples:
+                Response_Example:
+                  $ref: '#/components/examples/Response_Example1'
+components:
+  examples:
+    Request_Example1:
+      value:
+        name: lrmin
+        age: 18
+        sex: male
+    Response_Example1:
+      description: 成功
+      value:
+        code: '0000'
+        msg: 成功
+        data: {
+          id: 1,
+          name: lrmin,
+          age: 18,
+          sex: male
+        }
+    Response_Example2:
+      description: 成功
+      value:
+        code: '0000'
+        msg: 成功
+        data: {
+          total: 28,
+          pages: 3,
+          size: 10,
+          current: 1,
+          records: [{
+            id: 1,
+            name: lrmin,
+            age: 18,
+            sex: male
+          }]
+        }     
+    Response_Example3:
+      description: 成功
+      value:
+        code: '0000'
+        msg: 成功
+        data: {}
