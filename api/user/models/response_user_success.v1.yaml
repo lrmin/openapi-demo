@@ -1,0 +1,13 @@
+title: response_user_success
+type: object
+x-tags:
+  - response_success
+properties:
+  code:
+    type: string
+    description: 状态码
+  msg:
+    type: string
+    description: 状态描述
+  data:
+    $ref: user.resp.v1.yaml
